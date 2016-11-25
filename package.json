@@ -9,6 +9,7 @@
   "author": "Cristiano Mendes",
   "license": "ISC",
   "dependencies": {
-    "vue": "^1.0.26"
+    "vue": "^1.0.26",
+    "vue-router": "^2.0.3"
   }
 }
