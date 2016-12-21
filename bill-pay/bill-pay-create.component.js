@@ -1,7 +1,7 @@
 /**
  * Created by Desenvolvimento on 24/11/2016.
  */
-window.billCreateComponent = Vue.extend({
+window.billPayCreateComponent = Vue.extend({
     template: `<form @submit.prevent="submit" name="form">
                 <label for="">Vencimento:</label> <input type="text" v-model="bill.date_due"><br>
                 <label for="">Nome:</label>
@@ -31,20 +31,27 @@ window.billCreateComponent = Vue.extend({
             }
         };
     },
-    methods: {
-        submit: function() {
-            if (this.formType == 'insert') {
-                this.$dispatch('new-bill', this.bill);
-            }
-            this.$dispatch('change-activedview', 0);
+    created: function(){
+        if(this.$route.name == 'bill.update'){
+            this.formType = 'update';
+            this.getBill(this.$route.params.index);
         }
     },
-    events: {
-        'change-formtype': function (formType) {
-            this.formType = formType;
+    methods: {
+        submit: function() {
+            if(this.formType == 'insert'){
+                this.$root.$children[0].billsPay.push(this.bill);
+            }
+            this.bill = {
+                date_due: '',
+                name: '',
+                value: 0,
+                done: false
+            }
+            this.$router.go({name: 'bill-pay.list'})
         },
-        'change-bill': function (bill) {
-            this.bill = bill;
+        getBill: function(index){
+            this.bill = this.$root.$children[0].billsPay[index];
         }
     }
 });
