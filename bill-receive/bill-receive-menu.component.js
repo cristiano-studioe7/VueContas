@@ -1,7 +1,4 @@
-/**
- * Created by Desenvolvimento on 24/11/2016.
- */
-window.billPayMenuComponent = Vue.extend({
+window.billReceiveMenuComponent = Vue.extend({
     template: `<nav>
         <ul>
             <li v-for="o in menus"><a v-link="{name: o.routeName}">{{ o.name }}</a></li>
@@ -10,8 +7,8 @@ window.billPayMenuComponent = Vue.extend({
     data: function () {
         return{
             menus: [
-                {id: 0, name: "Listar Contas", routeName:'bill-pay.list'},
-                {id: 1, name: "Criar Conta", routeName:'bill-pay.create'},
+                {id: 0, name: "Listar Vencimentos", routeName:'bill-receive.list'},
+                {id: 1, name: "Criar Receita", routeName:'bill-receive.create'},
                 {id: 2, name: "Dashboard", routeName:'dashboard'}
             ],
         };

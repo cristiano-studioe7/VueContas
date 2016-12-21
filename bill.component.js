@@ -16,9 +16,19 @@ window.billComponent = Vue.extend({
        return {
            menus: [
                {name: "Contas á Pagar", routeName: 'bill-pay.list'},
-               {name: "Contas á Receber", routeName: 'bill-receive'}
+               {name: "Contas á Receber", routeName: 'bill-receive.list'}
            ]
        }
+    },
+    computed: {
+        test: function () {
+            if (this.$route.name != 'dashboard') {
+
+            } else {
+
+            }
+        }
     }
+
 
 });
