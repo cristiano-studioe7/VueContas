@@ -21,7 +21,7 @@ window.billPayListComponent = Vue.extend({
                         <td>{{ o.value | currency 'R$' }}</td>
                         <td :class="{'pago': o.done, 'npago' : !o.done}">{{ o.done | doneLabel }}</td>
                         <td>
-                            <a v-link="{name: 'bill-pay.update', params:{index: index}}">Editar</a> |
+                            <a v-link="{name: 'bill-pay.update', params:{id: o.id}}">Editar</a> |
                             <a href="#" @click.prevent="deleteBill(o)">Excluir</a> |
                             <a href="#" @click.prevent="payBill(o)" v-if="o.done==0">Pagar</a>
                             <a href="#" @click.prevent="NpayBill(o)" v-if="o.done==1">Estornar</a>
@@ -31,26 +31,43 @@ window.billPayListComponent = Vue.extend({
             </table>`,
     data: function () {
         return {
-            bills: this.$root.$children[0].billsPay
+            bills: []
         };
+    },
+    created: function(){
+        var self = this;
+        Bill.billsPay().then(function (response) {
+            self.bills = response.data;
+        })
     },
     methods: {
         deleteBill: function (bill) {
             if (confirm("Deseja excluir a conta?")) {
-                this.$root.$children[0].billsPay.$remove(bill);
+                var self = this;
+                Bill.delete({id: bill.id}).then(function(response) {
+                    self.bills.$remove(bill);
+                    self.$dispatch('change-info');
+                });
             }
         },
         payBill: function (bill) {
             if (confirm("Deseja pagar a conta?")) {
                 bill.done = 1;
+                var self = this;
+                Bill.update({id: bill.id}, bill).then(function (response) {
+                    self.$dispatch('change-info');
+                });
             }
-            this.activedView = 0;
         },
         NpayBill: function (bill) {
             if (confirm("Deseja remover o status de pagamento da conta?")) {
                 bill.done = 0;
+                var self = this;
+                Bill.update({id: bill.id}, bill).then(function (response) {
+                    self.$dispatch('change-info');
+                });
             }
-            this.activedView = 0;
+
         }
     }
     });

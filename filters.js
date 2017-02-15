@@ -8,6 +8,13 @@ Vue.filter('doneLabel', function (value) {
         return "Paga"
     }
 });
+Vue.filter('doneLabelR', function (value) {
+    if (value == 0) {
+        return "Não Recebido"
+    } else {
+        return "Recebida"
+    }
+});
 Vue.filter('statusGeneral', function (value) {
     if (value === false) {
         return "Nenhuma Conta Cadastrada";

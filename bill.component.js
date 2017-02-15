@@ -19,16 +19,5 @@ window.billComponent = Vue.extend({
                {name: "Contas á Receber", routeName: 'bill-receive.list'}
            ]
        }
-    },
-    computed: {
-        test: function () {
-            if (this.$route.name != 'dashboard') {
-
-            } else {
-
-            }
-        }
     }
-
-
 });

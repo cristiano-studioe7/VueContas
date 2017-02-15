@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/vue.iml" filepath="$PROJECT_DIR$/.idea/vue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../vue-bills-api/.idea/vue-bills-api.iml" filepath="$PROJECT_DIR$/../vue-bills-api/.idea/vue-bills-api.iml" />
     </modules>
   </component>
 </project>

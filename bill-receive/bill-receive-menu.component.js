@@ -1,3 +1,6 @@
+/**
+ * Created by Desenvolvimento on 24/11/2016.
+ */
 window.billReceiveMenuComponent = Vue.extend({
     template: `<nav>
         <ul>
@@ -7,8 +10,8 @@ window.billReceiveMenuComponent = Vue.extend({
     data: function () {
         return{
             menus: [
-                {id: 0, name: "Listar Vencimentos", routeName:'bill-receive.list'},
-                {id: 1, name: "Criar Receita", routeName:'bill-receive.create'},
+                {id: 0, name: "Listar Contas", routeName:'bill-receive.list'},
+                {id: 1, name: "Criar Conta", routeName:'bill-receive.create'},
                 {id: 2, name: "Dashboard", routeName:'dashboard'}
             ],
         };

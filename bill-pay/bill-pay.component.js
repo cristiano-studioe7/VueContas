@@ -14,27 +14,25 @@ window.billPayComponent = Vue.extend({
     </style>
     <h1>{{ title }}</h1>
         <h3 :class="{'red': status, 'green' : !status, 'gray' : status===false}">{{ status | statusGeneral }}</h3>
+        <h3>{{ total | currency 'R$ '}}</h3>
         <menu-component></menu-component>
         <router-view></router-view>
         `,
         data: function () {
             return {
                 title: "Contas à Pagar",
-                activedView: 0,
-                bill: {
-                    date_due: '',
-                    name: '',
-                    value: 0,
-                    done: 0
-                },
-
+                status: false,
+                total: 0
             };
         },
-        computed: {
-            status: function () {
-                var bills = this.$root.$children[0].billsPay;
+        created: function () {
+          this.updateStatus();
+          this.updateTotal();
+        },
+        methods: {
+            calculateStatus: function (bills) {
                 if (!bills.length) {
-                    return false
+                    this.status = false;
                 }
                 var count = 0;
                 for (var i in bills) {
@@ -42,7 +40,25 @@ window.billPayComponent = Vue.extend({
                         count++;
                     }
                 }
-                return count;
+                this.status = count;
+            },
+            updateStatus: function () {
+                var self = this;
+                Bill.billsPay().then(function (response) {
+                    self.calculateStatus(response.data);
+                })
+            },
+            updateTotal: function(){
+                var self = this;
+                Bill.total({type: 1}).then(function (response) {
+                    self.total = response.data.total;
+                })
+            }
+        },
+        events: {
+            'change-info': function () {
+                this.updateStatus();
+                this.updateTotal();
             }
         }
     });

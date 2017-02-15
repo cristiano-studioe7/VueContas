@@ -15,37 +15,27 @@ window.dashboardComponent = Vue.extend({
     data: function () {
         return {
             title: "Dashboard",
+            totalPay: 0,
+            totalReceive: 0,
+            total: 0
         };
     },
-    computed: {
-        totalReceive: function () {
-            var billsReceive = this.$root.$children[0].billsReceive;
-
-            var totalReceive = 0;
-            for (var i in billsReceive) {
-                if (billsReceive[i].done) {
-                    totalReceive+=billsReceive[i].value;
-                }
-            }
-
-            return totalReceive;
-        },
-        totalPay: function () {
-            var billsPay = this.$root.$children[0].billsPay;
-
-            var totalPay = 0;
-            for (var i in billsPay) {
-                if (billsPay[i].done) {
-                    totalPay+=billsPay[i].value;
-                }
-            }
-
-            return totalPay;
-        },
-        total: function () {
-            var a = this.totalReceive,
-                b = this.totalPay;
-            return a-b;
+    created: function () {
+      this.calcTotal();
+    },methods: {
+        calcTotal: function () {
+            var self = this;
+            Bill.total({type: 2}).then(function (response) {
+                self.totalReceive = response.data.total;
+            });
+             Bill.total({type: 1}).then(function (response) {
+                self.totalPay = response.data.total;
+            });
         }
-    }
-    });
+    },
+      computed: {
+        total: function () {
+           return this.totalReceive - this.totalPay;
+        }
+      }
+});
